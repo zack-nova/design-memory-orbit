@@ -1,0 +1,142 @@
+package:
+    type: orbit
+    name: design-memory-orbit
+description: design-memory-orbit orbit
+meta:
+    file: .harness/orbits/design-memory-orbit.yaml
+    agents_template: |
+        # 设计记忆宪法：Design Memory
+
+        本仓库使用 design memory orbit 保存人与 Agent 讨论设计时形成的长期项目语言与架构决策。
+
+        ## 不可违反规则
+
+        - 先读 `docs/design-memory-orbit/INDEX.md`。
+        - 项目记忆由 `CONTEXT.md`、`CONTEXT-MAP.md`、`docs/adr/` 及 context 目录内的同名文件组成。
+        - 不得编造领域术语、上下文边界或架构决策；不确定内容必须保留为 open question。
+        - 缺少项目记忆不是错误；只在术语或决策被确认后 lazy create。
+        - 任何输出若与既有 ADR 冲突，必须明确指出冲突并等待人类决策。
+
+        更多规则和模板见 `docs/design-memory-orbit/INDEX.md`。
+    humans_template: |
+        # HUMANS.md - Design Memory Orbit
+
+        这个 orbit 给代码仓库使用，帮助 agent 记住人与 AI 讨论设计时确认的项目语言、上下文边界和架构决策。
+
+        常用 skill：
+
+        - `grill-with-docs`：当你想把设计讨论推进成清晰术语、边界或 ADR-worthy 决策时使用。
+        - `grill-me`：当你只想被追问计划、不想写入项目记忆时使用。
+        - `zoom-out`：当你想让 agent 上升一层解释陌生代码区域时使用。
+        - `improve-codebase-architecture`：当你想找模块深化、测试性、AI 可导航性机会时使用。
+        - `caveman`：当你想短句高密度沟通时使用。
+
+        你需要参与的决策：
+
+        - 一个术语是否是项目里的正式叫法。
+        - 一个 context 是否拥有某个概念或数据。
+        - 一个架构选择是否值得记录成 ADR。
+        - 新决定是否要推翻、废弃或替代旧 ADR。
+
+        `CONTEXT.md`、`CONTEXT-MAP.md` 和 `docs/adr/` 会在有确认内容时才创建；空文件没有价值。
+    bootstrap_template: |
+        # BOOTSTRAP.md - Design Memory Orbit
+
+        本 orbit 安装到代码仓库，用于让 agent 能读取并维护设计讨论形成的长期项目记忆：领域语言、上下文边界与 ADR。
+
+        ## 初始化步骤
+
+        ### 1. 确认仓库上下文
+
+        确认当前目录是目标代码仓库根目录。
+
+        ### 2. 确认可读取 orbit 文档
+
+        确认以下路径存在并可读：
+
+        ```text
+        docs/design-memory-orbit/INDEX.md
+        skills/design-memory-orbit/
+        ```
+
+        ### 3. 读取规则索引
+
+        读取：
+
+        ```text
+        docs/design-memory-orbit/INDEX.md
+        ```
+
+        再按索引递归读取相关子文档。
+
+        ### 4. 扫描已有项目记忆
+
+        检查并报告当前仓库是否已有：
+
+        ```text
+        CONTEXT.md
+        CONTEXT-MAP.md
+        docs/adr/
+        ```
+
+        如果存在 `CONTEXT-MAP.md`，按 multi-context 规则读取其中列出的 context 位置，并检查各 context 的 `CONTEXT.md` 与 `docs/adr/`。
+        如果 map 指向的 context 文件不存在，报告缺失并继续处理可读取的部分。
+
+        ### 5. 报告初始化结果
+
+        输出：
+
+        - 当前是 single-context 还是 multi-context。
+        - 已发现的 context 文档。
+        - 已发现的 ADR 目录和 ADR 数量。
+        - 是否存在明显冲突，例如 `CONTEXT-MAP.md` 指向不存在的 context。
+
+        缺少 `CONTEXT.md`、`CONTEXT-MAP.md` 或 `docs/adr/` 不视为初始化失败。
+
+        ## 禁止事项
+
+        - 不创建空的 `CONTEXT.md`。
+        - 不创建空的 `CONTEXT-MAP.md`。
+        - 不创建空的 `docs/adr/`。
+        - 不把未经确认的术语、边界或决策写成项目记忆。
+    include_in_projection: true
+    include_in_write: true
+    include_in_export: true
+    include_description_in_orchestration: true
+capabilities:
+    commands:
+        paths:
+            include:
+                - commands/design-memory-orbit/**/*.md
+    skills:
+        local:
+            paths:
+                include:
+                    - skills/design-memory-orbit/*
+content:
+    - name: design-memory-docs
+      role: rule
+      paths:
+        include:
+            - docs/design-memory-orbit/**
+behavior:
+    scope:
+        projection_roles:
+            - meta
+            - subject
+            - rule
+            - process
+        write_roles:
+            - meta
+            - rule
+        export_roles:
+            - meta
+            - rule
+        orchestration_roles:
+            - meta
+            - rule
+            - process
+    orchestration:
+        include_orbit_description: true
+        materialize_agents_from_meta: true
+
