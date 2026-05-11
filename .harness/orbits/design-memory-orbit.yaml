@@ -5,19 +5,25 @@ description: design-memory-orbit orbit
 meta:
     file: .harness/orbits/design-memory-orbit.yaml
     agents_template: |
-        # 设计记忆宪法：Design Memory
+        # Design Memory Workflow
 
-        本仓库使用 design memory orbit 保存人与 Agent 讨论设计时形成的长期项目语言与架构决策。
+        Design Memory Workflow 用于在设计讨论需要时维护长期项目语言、上下文边界和 ADR。
 
-        ## 不可违反规则
+        ## 按需读取
 
-        - 先读 `docs/design-memory-orbit/INDEX.md`。
-        - 项目记忆由 `CONTEXT.md`、`CONTEXT-MAP.md`、`docs/adr/` 及 context 目录内的同名文件组成。
-        - 不得编造领域术语、上下文边界或架构决策；不确定内容必须保留为 open question。
-        - 缺少项目记忆不是错误；只在术语或决策被确认后 lazy create。
+        - 讨论项目术语、context boundary、架构决策、`CONTEXT.md`、
+          `CONTEXT-MAP.md` 或 ADR 时，先读 `docs/design-memory-orbit/INDEX.md`，
+          再按索引读相关子文档。
+        - 需要确认现有项目语言或 ADR 约束时，读取任务相关的 `CONTEXT.md`、
+          `CONTEXT-MAP.md` 和 `docs/adr/`。
+
+        ## 常驻边界
+
+        - 不得编造领域术语、context boundary 或架构决策；不确定内容必须保留为
+          open question。
+        - 缺少项目记忆不是错误；只在术语、关系、边界、open question 或决策被确认后
+          lazy create。
         - 任何输出若与既有 ADR 冲突，必须明确指出冲突并等待人类决策。
-
-        更多规则和模板见 `docs/design-memory-orbit/INDEX.md`。
     humans_template: |
         # HUMANS.md - Design Memory Orbit
 
@@ -139,4 +145,3 @@ behavior:
     orchestration:
         include_orbit_description: true
         materialize_agents_from_meta: true
-
